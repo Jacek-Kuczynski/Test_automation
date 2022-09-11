@@ -1,32 +1,13 @@
-Feature: Hotel Users
+Feature: Store User
 
-  Scenario: new account creation
+  Scenario Outline: new address creation
 
-    Given an open browser with https://hotel-testlab.coderslab.pl/en/
-    When new user register
-    Then an account is created
-    And close browser
-
-  Scenario Outline: new account can be created for given users
-
-    Given an open browser with https://hotel-testlab.coderslab.pl/en/
-    When a user with <name> and <lastname> is registered
-    Then an account is created
-    And close browser
+    Given an open browser with https://mystore-testlab.coderslab.pl/
+    And logged in
+    When reached new address creation page
+    Then filled form with new address data: <Alias> <Address> <City> <Zip/Postal Code> <Country> <Phone>
+    And confirmed added data
 
     Examples:
-      | name | lastname    |
-      | jan  | januszewski |
-      | tom  | tomaszewski |
-      | paw  | pawslowski  |
-
-  Scenario: adding first address to account
-
-    Given an opened browser with https://hotel-testlab.coderslab.pl/en/
-    And logged in
-    When adding a new address
-    And new address form filling
-    Then new address is added
-    And close browser
-
-
+      | Alias | Address | City | Zip/Postal Code | Country | Phone |
+      | Adres 1 | ul. Pelplińska 111 | Gdynia | 81-258 | United Kingdom | 123-123-123 |
