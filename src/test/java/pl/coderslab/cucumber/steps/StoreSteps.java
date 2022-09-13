@@ -2,6 +2,7 @@ package pl.coderslab.cucumber.steps;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -17,7 +18,7 @@ import static org.junit.Assert.*;
 
 public class StoreSteps {
 
-    private WebDriver driver;
+    private static WebDriver driver;
 
     @Given("an open browser with {}")
     public void openBrowser(String url) {
@@ -48,15 +49,24 @@ public class StoreSteps {
     }
 
     @When("reached new address creation page")
-    public void addNewAddress() {
+    public void reachNewAddressForm() {
         WebElement addressesButton = this.driver.findElement(By.xpath("/html/body/main/section/div/div/section/section/div/div/a[2]/span/i"));
         addressesButton.click();
 
-        WebElement createNewAddressButton = this.driver.findElement(By.xpath("/html/body/main/section/div/div/section/section/div[3]/a"))
+        WebElement createNewAddressButton = this.driver.findElement(By.xpath("/html/body/main/section/div/div/section/section/div[3]/a"));
         createNewAddressButton.click();
 
-        //Uzupelnienie formularza z nowym adresem
+    }
 
+//    @Then("filled form with new address data: <Alias> <Address> <City> <Zip\\/Postal Code> <Country> <Phone>")
+//    public void fillNewAddressForm() {
+//
+//        @And("confirmed added data")
+//        public void confirmedAddedData() {
+
+
+        }
     }
 }
+
 
