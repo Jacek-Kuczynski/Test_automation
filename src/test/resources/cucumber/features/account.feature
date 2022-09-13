@@ -6,7 +6,7 @@ Feature: Store User
     And logged in
     When reached new address creation page
     Then filled form with new address data: <Alias> <Address> <City> <Zip/Postal Code> <Country> <Phone>
-    And confirmed added data
+    And confirmed the new address
 
     Examples:
       | Alias | Address | City | Zip/Postal Code | Country | Phone |
