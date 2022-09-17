@@ -5,20 +5,16 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-
+import pl.coderslab.model.StoreAddressesPage;
 import java.time.Duration;
-import java.util.Random;
-
 import static org.junit.Assert.*;
 
 public class StoreSteps {
 
-    private static WebDriver driver;
+    private WebDriver driver;
 
     @Given("an open browser with {}")
     public void openBrowser(String url) {
@@ -28,8 +24,8 @@ public class StoreSteps {
         //        Otworz przegladarke
         this.driver = new ChromeDriver();
         //        Jesli test nie przechodzi poprawnie, to pewnie za wolno laduje sie strona -> Dodaj czekanie.
-//        this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        this.driver.get("url");
+        this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        this.driver.get(url);
     }
 
     @And("logged in")
@@ -58,15 +54,55 @@ public class StoreSteps {
 
     }
 
-//    @Then("filled form with new address data: <Alias> <Address> <City> <Zip\\/Postal Code> <Country> <Phone>")
-//    public void fillNewAddressForm() {
-//
-//        @And("confirmed added data")
-//        public void confirmedAddedData() {
+    @Then("filled form with new address data: {}, {}, {}, {}, {}, {}")
+    public void fillNewAddressForm(String alias, String address, String city, String zipPostalCode, String country, String phone) {
 
+        WebElement aliasInput = this.driver.findElement(By.name("alias"));
+        aliasInput.clear();
+        aliasInput.sendKeys(alias);
 
-        }
+        WebElement addressInput = this.driver.findElement(By.name("address1"));
+        addressInput.clear();
+        addressInput.sendKeys(address);
+
+        WebElement cityInput = this.driver.findElement(By.name("city"));
+        cityInput.clear();
+        cityInput.sendKeys(city);
+
+        WebElement zipPostalCodeInput = this.driver.findElement(By.name("postcode"));
+        zipPostalCodeInput.clear();
+        zipPostalCodeInput.sendKeys(zipPostalCode);
+
+        WebElement countryDropDownList = this.driver.findElement(By.name("id_country"));
+        countryDropDownList.click();
+        WebElement selectCountry = this.driver.findElement(By.xpath("/html/body/main/section/div/div/section/section/div/div/form/section/div[10]/div[1]/select/option[2]"));
+        selectCountry.click();
+
+        WebElement phoneInput = this.driver.findElement(By.name("phone"));
+        phoneInput.clear();
+        phoneInput.sendKeys(phone);
+
+        WebElement saveButton = this.driver.findElement(By.xpath("/html/body/main/section/div/div/section/section/div/div/form/footer/button"));
+        saveButton.click();
+
+    }
+
+    @And("confirmed added data")
+    public void confirmedAddedData() {
+        String expectedNewAddressData = "Adres 1\n" + "Franek Dzbanek\n" + "ul. Pelplińska 111\n" + "Gdynia\n" + "81-258\n" + "United Kingdom\n" + "123-123-123";
+        StoreAddressesPage storeAddressesPage = new StoreAddressesPage(driver);
+        String addressesListFieldText = storeAddressesPage.getNewAddressData();
+
+    }
+
+    @And("deleted added address")
+    public void deletedAddedAddress() {
+        WebElement deleteAddressButton = this.driver.findElement(By.xpath("/html/body/main/section/div/div/section/section/div[2]/article/div[2]/a[2]"));
+        deleteAddressButton.click();
+
+        String expectedAlertText = "Address successfully deleted!";
+        StoreAddressesPage storeAddressesPage = new StoreAddressesPage(driver);
+        String alertText = storeAddressesPage.getAlertText();
+        assertEquals(expectedAlertText, alertText);
     }
 }
-
-
