@@ -13,6 +13,9 @@ public class StoreMyAccountPage {
     @FindBy(xpath = "/html/body/main/section/div/div/section/section/div/div/a[2]/span/i")
     private WebElement addressesButton;
 
+    @FindBy(xpath = "//*[@id=\"category-3\"]/a")
+    private WebElement clothesFromTopMenuButton;
+
     public StoreMyAccountPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
@@ -20,5 +23,9 @@ public class StoreMyAccountPage {
 
     public void goToAddresses() {
         addressesButton.click();
+    }
+
+    public void selectClothesFromTopMenuButton() {
+        clothesFromTopMenuButton.click();
     }
 }

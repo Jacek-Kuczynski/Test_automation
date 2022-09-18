@@ -105,4 +105,14 @@ public class StoreSteps {
         String alertText = storeAddressesPage.getAlertText();
         assertEquals(expectedAlertText, alertText);
     }
+
+
+
+
+    @When("added Hummingbird Printed Sweater to cart \\({int}% disc check)")
+    public void addedHummingbirdPrintedSweaterToCartDiscCheck(int arg0) {
+
+
+    }
 }
+

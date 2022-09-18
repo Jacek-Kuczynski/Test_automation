@@ -2,16 +2,23 @@ package pl.coderslab;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pl.coderslab.model.*;
+
+import java.io.File;
 import java.time.Duration;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class StoreTest {
 
     private final static String PERMANENT_LOGIN = "Franek@gmail.com";
     private final static String PERMANENT_PASSWORD = "12345";
+    private final static String quantity = "5";
+
     private WebDriver driver;
 
     @Before
@@ -31,35 +38,89 @@ public class StoreTest {
     @Test
     public void testAddingAddress() {
 
+        // przejdź ze strony głównej do strony logowania
+        StoreMainPage storeMainPage = new StoreMainPage(this.driver);
+        storeMainPage.clickSignIn();
+
+        // zaloguj się na utworzonego użytkownika (z conajmniej 1 dodanym adresem)
+        StoreLoginPage storeLoginPage = new StoreLoginPage(this.driver);
+        storeLoginPage.signInWithCredentials(PERMANENT_LOGIN, PERMANENT_PASSWORD);
+
+        // przejdź do adresów użytkownika (kafelek "ADDRESSES")
+        StoreMyAccountPage storeMyAccountPage = new StoreMyAccountPage(this.driver);
+        storeMyAccountPage.goToAddresses();
+
+        // przejdź do strony tworzenia nowego adresu
+        StoreAddressesPage storeAddressesPage = new StoreAddressesPage(this.driver);
+        storeAddressesPage.goToCreateNewAddress();
+
+        // wypełnij formularz i zapisz
+        StoreNewAddressForm storeNewAddressForm = new StoreNewAddressForm(this.driver);
+        storeNewAddressForm.fillFormAndSave("Adres 1", "ul. Pelplińska 111", "Gdynia", "81-258", "United Kingdom", "123-123-123");
+
+        // sprawdź, czy nowy adres zawiera te same dane
+        String expectedNewAddressData = "Adres 1\n" + "Franek Dzbanek\n" + "ul. Pelplińska 111\n" + "Gdynia\n" + "81-258\n" + "United Kingdom\n" + "123-123-123";
+        StoreAddressesPage storeAddressesPage1 = new StoreAddressesPage(driver);
+        String newAddressData = storeAddressesPage1.getNewAddressData();
+        assertEquals(expectedNewAddressData, newAddressData);
+
+        // usuń nowy adres
+        storeAddressesPage.deleteAddress();
+
+        // sprawdź, czy wyświetla się komunikat potwierdzający usunięcie adresu
+        String expectedAlertText = "Address successfully deleted!";
+        String alertText = storeAddressesPage.getAlertText();
+        assertEquals(expectedAlertText, alertText);
+
+    }
+
+    @Test
+    public void testBuyingClothes() {
+
         StoreMainPage storeMainPage = new StoreMainPage(this.driver);
         storeMainPage.clickSignIn();
 
         StoreLoginPage storeLoginPage = new StoreLoginPage(this.driver);
         storeLoginPage.signInWithCredentials(PERMANENT_LOGIN, PERMANENT_PASSWORD);
 
+        // przejdź do kategorii z ubraniami przez zakładkę "CLOTHES" w górnym menu
         StoreMyAccountPage storeMyAccountPage = new StoreMyAccountPage(this.driver);
-        storeMyAccountPage.goToAddresses();
+        storeMyAccountPage.selectClothesFromTopMenuButton();
 
-        StoreAddressesPage storeAddressesPage = new StoreAddressesPage(this.driver);
-        storeAddressesPage.goToCreateNewAddress();
+        Store2_ClothesPage store2_clothesPage = new Store2_ClothesPage(this.driver);
+        store2_clothesPage.selectSweater();
 
-        StoreNewAddressForm storeNewAddressForm = new StoreNewAddressForm(this.driver);
-        storeNewAddressForm.fillFormAndSave("Adres 1", "ul. Pelplińska 111", "Gdynia", "81-258", "United Kingdom", "123-123-123");
+        Store2_HummingbirdSweaterPage store2_hummingbirdSweaterPage = new Store2_HummingbirdSweaterPage(this.driver);
+        store2_hummingbirdSweaterPage.addToCartWithSizeAndQuantity(quantity);
 
+        Store2_ProductAddedPopUp store2_popUpProductAdded = new Store2_ProductAddedPopUp(this.driver);
+        store2_popUpProductAdded.proceedToCheckOut();
 
-        String expectedNewAddressData = "Adres 1\n" + "Franek Dzbanek\n" + "ul. Pelplińska 111\n" + "Gdynia\n" + "81-258\n" + "United Kingdom\n" + "123-123-123";
-        StoreAddressesPage storeAddressesPage1 = new StoreAddressesPage(driver);
-        String newAddressData = storeAddressesPage1.getNewAddressData();
-        assertEquals(expectedNewAddressData, newAddressData);
+        Store2_ShoppingCartPage store2_shoppingCartPage = new Store2_ShoppingCartPage(this.driver);
+        store2_shoppingCartPage.proceed2CheckOut();
 
-        storeAddressesPage.deleteAddress();
+        Store2_OrderSummaryPage store2_orderSummaryPage = new Store2_OrderSummaryPage(this.driver);
+        store2_orderSummaryPage.confirmAddress();
+        store2_orderSummaryPage.selectShippingMethod();
+        store2_orderSummaryPage.selectPaymentOption();
 
-        String expectedAlertText = "Address successfully deleted!";
-        String alertText = storeAddressesPage.getAlertText();
-        assertEquals(expectedAlertText, alertText);
+        TakesScreenshot scrShot = ((TakesScreenshot) driver);
+        File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
+        File DestFile = new File("C:\\CodersLab\\Test_automation\\screenshot1.png");
 
     }
 }
+
+//        Store2_ConfirmedOrderPage store2_confirmedOrderPage = new Store2_ConfirmedOrderPage(this.driver);
+//        store2_confirmedOrderPage.confirmationScreenshot();
+
+// >>> wybierze do zakupu Hummingbird Printed Sweater (opcja dodatkowa: sprawdzi czy rabat na niego wynosi 20%),
+// >>> wybierze rozmiar M (opcja dodatkowa: zrób tak żeby można było sparametryzować rozmiar i wybrać S,M,L,XL),
+// >>> wybierze 5 sztuk według parametru podanego w teście (opcja dodatkowa: zrób tak żeby można było sparametryzować liczbę sztuk),
+
+
+
+
 
 
 

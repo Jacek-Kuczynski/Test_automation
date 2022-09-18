@@ -12,3 +12,15 @@ Feature: Store User
     Examples:
       | Alias   | Address            | City   | Zip/Postal Code | Country        | Phone       |
       | Adres 1 | ul. Pelplińska 111 | Gdynia | 81-258          | United Kingdom | 123-123-123 |
+
+
+  Scenario: buying 5 sweaters (m size, pick up in store, pay by check)
+
+    Given an open browser with https://mystore-testlab.coderslab.pl/
+    And logged in
+    When added Hummingbird Printed Sweater to cart
+    And proceeded to check out (chopping cart)
+    Then confirmed address, shipping method, payment
+    And ordered with an obligation to pay (terms of service agreed)
+
+
