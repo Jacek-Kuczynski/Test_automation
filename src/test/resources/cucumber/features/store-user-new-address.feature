@@ -14,7 +14,7 @@ Feature: Store User
       | Adres 1 | ul. Pelplińska 111 | Gdynia | 81-258          | United Kingdom | 123-123-123 |
 
 
-  Scenario: buying 5 sweaters (m size, pick up in store, pay by check)
+  Scenario: ordering clothes
 
     Given an open browser with https://mystore-testlab.coderslab.pl/
     And logged in

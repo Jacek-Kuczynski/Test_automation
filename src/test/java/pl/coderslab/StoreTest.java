@@ -7,8 +7,13 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pl.coderslab.model.*;
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
+import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
 import static org.junit.Assert.assertEquals;
@@ -75,7 +80,7 @@ public class StoreTest {
     }
 
     @Test
-    public void testBuyingClothes() {
+    public void testBuyingClothes() throws IOException {
 
         StoreMainPage storeMainPage = new StoreMainPage(this.driver);
         storeMainPage.clickSignIn();
@@ -104,23 +109,8 @@ public class StoreTest {
         store2_orderSummaryPage.selectShippingMethod();
         store2_orderSummaryPage.selectPaymentOption();
 
-        TakesScreenshot scrShot = ((TakesScreenshot) driver);
-        File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
-        File DestFile = new File("C:\\CodersLab\\Test_automation\\screenshot1.png");
+        Screenshot fpScreenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
+        ImageIO.write(fpScreenshot.getImage(),"PNG",new File("C:/CodersLab/Test_automation/screenshot1.png"));
 
     }
 }
-
-//        Store2_ConfirmedOrderPage store2_confirmedOrderPage = new Store2_ConfirmedOrderPage(this.driver);
-//        store2_confirmedOrderPage.confirmationScreenshot();
-
-// >>> wybierze do zakupu Hummingbird Printed Sweater (opcja dodatkowa: sprawdzi czy rabat na niego wynosi 20%),
-// >>> wybierze rozmiar M (opcja dodatkowa: zrób tak żeby można było sparametryzować rozmiar i wybrać S,M,L,XL),
-// >>> wybierze 5 sztuk według parametru podanego w teście (opcja dodatkowa: zrób tak żeby można było sparametryzować liczbę sztuk),
-
-
-
-
-
-
-

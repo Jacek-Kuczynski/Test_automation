@@ -33,6 +33,7 @@ public class Store2_HummingbirdSweaterPage {
         selectSizeM.click();
 
         quantityTextField.click();
+        quantityTextField.clear();
         quantityTextField.sendKeys(Keys.CONTROL, "a");
         quantityTextField.sendKeys(Keys.BACK_SPACE);
         quantityTextField.sendKeys(quantity);
