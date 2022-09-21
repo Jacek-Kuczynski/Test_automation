@@ -80,7 +80,7 @@ public class StoreTest {
     }
 
     @Test
-    public void testBuyingClothes() throws IOException {
+    public void testBuyingClothes() {
 
         StoreMainPage storeMainPage = new StoreMainPage(this.driver);
         storeMainPage.clickSignIn();
@@ -111,7 +111,11 @@ public class StoreTest {
 
         //screenshot potwierdzenia i kwoty
         File screenshot = driver.findElement(By.xpath("//*[@id=\"order-confirmation\"]")).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(screenshot, new File("C:/CodersLab/Test_automation/screenshot1.png"));
+        try {
+            FileUtils.copyFile(screenshot, new File("C:/CodersLab/Test_automation/screenshot1.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         // screenshot całej strony
 //        Screenshot fpScreenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
