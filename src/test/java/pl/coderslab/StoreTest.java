@@ -1,10 +1,9 @@
 package pl.coderslab;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pl.coderslab.model.*;
 import ru.yandex.qatools.ashot.AShot;
@@ -17,6 +16,7 @@ import java.io.IOException;
 import java.time.Duration;
 
 import static org.junit.Assert.assertEquals;
+import static org.openqa.selenium.By.name;
 
 public class StoreTest {
 
@@ -109,8 +109,25 @@ public class StoreTest {
         store2_orderSummaryPage.selectShippingMethod();
         store2_orderSummaryPage.selectPaymentOption();
 
-        Screenshot fpScreenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
-        ImageIO.write(fpScreenshot.getImage(),"PNG",new File("C:/CodersLab/Test_automation/screenshot1.png"));
+        //screenshot potwierdzenia i kwoty
+        File screenshot = driver.findElement(By.xpath("//*[@id=\"order-confirmation\"]")).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(screenshot, new File("C:/CodersLab/Test_automation/screenshot1.png"));
+
+        // screenshot całej strony
+//        Screenshot fpScreenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
+//        ImageIO.write(fpScreenshot.getImage(), "PNG", new File("C:/CodersLab/Test_automation/screenshot2.png"));
 
     }
 }
+
+
+// >>> wybierze do zakupu Hummingbird Printed Sweater (opcja dodatkowa: sprawdzi czy rabat na niego wynosi 20%),
+// >>> wybierze rozmiar M (opcja dodatkowa: zrób tak żeby można było sparametryzować rozmiar i wybrać S,M,L,XL),
+// >>> wybierze 5 sztuk według parametru podanego w teście (opcja dodatkowa: zrób tak żeby można było sparametryzować liczbę sztuk),
+
+// Thread.sleep(2000); <--- odczekaj
+
+
+
+
+

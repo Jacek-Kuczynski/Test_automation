@@ -47,5 +47,6 @@ public class Store2_OrderSummaryPage {
         selectPayByCheck.click();
         selectAgreeToServiceTerms.click();
         orderWithAnObligationToPayButton.click();
+
     }
 }
