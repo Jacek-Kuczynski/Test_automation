@@ -12,6 +12,12 @@ public class Store2_ClothesPage {
     @FindBy(xpath = "/html/body/main/section/div/div[2]/section/section/div[3]/div/div[1]/article[2]/div/div[1]/h2/a")
     private WebElement hummingbirdPrintedSweater;
 
+    @FindBy(className = "regular-price")
+    private WebElement regularPrice;
+
+    @FindBy(className = "price")
+    private WebElement price;
+
     public Store2_ClothesPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
@@ -21,4 +27,7 @@ public class Store2_ClothesPage {
         hummingbirdPrintedSweater.click();
     }
 }
+
+//    NextPage >>> HummingbirdSwPage
+
 

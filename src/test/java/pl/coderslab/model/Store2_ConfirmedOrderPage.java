@@ -17,9 +17,7 @@ public class Store2_ConfirmedOrderPage {
         this.driver = driver;
     }
 
-//    public TakesScreenshot getOrderConfScreenshot() {
-//        return orderConf;
-//    }
+
 }
 
 

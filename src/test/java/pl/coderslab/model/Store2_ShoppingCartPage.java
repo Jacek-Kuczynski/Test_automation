@@ -20,4 +20,5 @@ public class Store2_ShoppingCartPage {
     public void proceed2CheckOut() {
         proceed2CheckOutButton.click();
     }
+
 }

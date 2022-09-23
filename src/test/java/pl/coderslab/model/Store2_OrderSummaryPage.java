@@ -28,7 +28,6 @@ public class Store2_OrderSummaryPage {
     private WebElement orderWithAnObligationToPayButton;
 
 
-
     public Store2_OrderSummaryPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
@@ -45,8 +44,12 @@ public class Store2_OrderSummaryPage {
 
     public void selectPaymentOption() {
         selectPayByCheck.click();
+    }
+
+    public void agreeOnTermsAndOrder() {
         selectAgreeToServiceTerms.click();
         orderWithAnObligationToPayButton.click();
-
     }
 }
+
+//np >>> Store2_ConfirmedOrderPage

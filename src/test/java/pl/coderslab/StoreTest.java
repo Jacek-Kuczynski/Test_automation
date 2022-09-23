@@ -3,7 +3,9 @@ package pl.coderslab;
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pl.coderslab.model.*;
 import ru.yandex.qatools.ashot.AShot;
@@ -16,7 +18,6 @@ import java.io.IOException;
 import java.time.Duration;
 
 import static org.junit.Assert.assertEquals;
-import static org.openqa.selenium.By.name;
 
 public class StoreTest {
 
@@ -76,6 +77,7 @@ public class StoreTest {
         String expectedAlertText = "Address successfully deleted!";
         String alertText = storeAddressesPage.getAlertText();
         assertEquals(expectedAlertText, alertText);
+        System.out.println(alertText);
 
     }
 
@@ -108,28 +110,28 @@ public class StoreTest {
         store2_orderSummaryPage.confirmAddress();
         store2_orderSummaryPage.selectShippingMethod();
         store2_orderSummaryPage.selectPaymentOption();
+        store2_orderSummaryPage.agreeOnTermsAndOrder();
 
-        //screenshot potwierdzenia i kwoty
+        // screenshot potwierdzenia i kwoty
         File screenshot = driver.findElement(By.xpath("//*[@id=\"order-confirmation\"]")).getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(screenshot, new File("C:/CodersLab/Test_automation/screenshot1.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        System.out.println("Screenshot1 done and saved as screenshot1.png");
 
         // screenshot całej strony
-//        Screenshot fpScreenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
-//        ImageIO.write(fpScreenshot.getImage(), "PNG", new File("C:/CodersLab/Test_automation/screenshot2.png"));
+        Screenshot fpScreenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
+        try {
+            ImageIO.write(fpScreenshot.getImage(), "PNG", new File("C:/CodersLab/Test_automation/screenshot2.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("fpScreenshot done and saved as screenshot2.png");
 
     }
 }
-
-
-// >>> wybierze do zakupu Hummingbird Printed Sweater (opcja dodatkowa: sprawdzi czy rabat na niego wynosi 20%),
-// >>> wybierze rozmiar M (opcja dodatkowa: zrób tak żeby można było sparametryzować rozmiar i wybrać S,M,L,XL),
-// >>> wybierze 5 sztuk według parametru podanego w teście (opcja dodatkowa: zrób tak żeby można było sparametryzować liczbę sztuk),
-
-// Thread.sleep(2000); <--- odczekaj
 
 
 

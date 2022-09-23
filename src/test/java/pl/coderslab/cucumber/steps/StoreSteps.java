@@ -9,8 +9,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pl.coderslab.model.StoreAddressesPage;
+
 import java.time.Duration;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class StoreSteps {
 
@@ -104,15 +106,9 @@ public class StoreSteps {
         StoreAddressesPage storeAddressesPage = new StoreAddressesPage(driver);
         String alertText = storeAddressesPage.getAlertText();
         assertEquals(expectedAlertText, alertText);
-    }
-
-
-
-
-    @When("added Hummingbird Printed Sweater to cart \\({int}% disc check)")
-    public void addedHummingbirdPrintedSweaterToCartDiscCheck(int arg0) {
-
-
+        System.out.println(alertText);
     }
 }
+
+
 
