@@ -121,6 +121,7 @@ public class StoreTest {
         }
         System.out.println("Screenshot1 done and saved as screenshot1.png");
 
+
         // screenshot całej strony
         Screenshot fpScreenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
         try {
