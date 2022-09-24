@@ -6,11 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.time.Duration;
-import java.util.concurrent.TimeUnit;
-
-import static org.openqa.selenium.Keys.BACK_SPACE;
-
 public class Store2_HummingbirdSweaterPage {
     private WebDriver driver;
 
@@ -44,4 +39,5 @@ public class Store2_HummingbirdSweaterPage {
 
     }
 }
+
 // nextPage >>> ProductAddedPOPup

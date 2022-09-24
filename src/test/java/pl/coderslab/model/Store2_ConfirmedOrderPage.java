@@ -16,8 +16,6 @@ public class Store2_ConfirmedOrderPage {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
-
-
 }
 
 

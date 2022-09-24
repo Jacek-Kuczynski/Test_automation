@@ -25,9 +25,9 @@ public class Store2_ClothesPage {
 
     public void selectSweater() {
         hummingbirdPrintedSweater.click();
+
     }
 }
 
+
 //    NextPage >>> HummingbirdSwPage
-
-
